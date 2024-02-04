@@ -23,7 +23,7 @@ def readKeyOrGenerateKeyIfAbsent() -> bytes:
         preshared_key = base64.b64decode(preshared_key)
         return preshared_key
 
-    preshared_key = get_random_bytes(16)
+    preshared_key = get_random_bytes(32)
     f = open(path, 'wb')
     f.write(base64.b64encode(preshared_key))
     return preshared_key

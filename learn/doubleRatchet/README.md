@@ -18,6 +18,10 @@ https://github.com/Syndace/python-doubleratchet
 
 1. TBD
 
+## TODO
+
+1. Duplicate message errors
+
 ## Questions
 
 1. TBD

@@ -1,0 +1,28 @@
+{
+  "version": "1.0.0",
+  "diffie_hellman_ratchet": {
+    "version": "1.0.0",
+    "own_ratchet_priv": "t\u00c8\u00ce\u008dy\u0019\u00d6[\u009e\u009b\u0097\u00a2M*\u00d9\ro\u00fd\u0089\u0004~\u00a2Uv\u0091:F*\u0086\n-\u00f7,\u00e0Qe*I\u00f8c\u0005\u0097\u0092\u0003\u00ad\u001b\u00a4/\u009f\u00b5\u00e8A(\u0010<\u00fd",
+    "other_ratchet_pub": "\u00f31<\u001e\u001c\u00f0\u00f3Av\u00beX\u00b0\u0018\u00c2J\u009c;\u000e\u009a\u0081T`\u00f0./[\u000e\u009aV\u00b5\u00d6V&`\u00bfc\u00c7\u00f55\u00ab\u00e77\u008d1^4\u00ef\u00aeT\u001d\u00a2\u00cd1\u0007\u00daa",
+    "root_chain": {
+      "version": "1.0.0",
+      "length": 2,
+      "key": "+tS\u0086\u00b1\u00ea\u0002\u00a3\b\u00bc\u00d6U\u00ea\u00aels\u0095A\u00dc\u0015\u00be\u00ee\tb\u00b6+8c\u00ec\u00bc\u00df\u00ac"
+    },
+    "symmetric_key_ratchet": {
+      "version": "1.0.0",
+      "receiving_chain": {
+        "version": "1.0.0",
+        "length": 5,
+        "key": ":\u00eda7*9\u00b3L\u0018\u00f4\u00c7\u00fb}\u00b8(\u00e0y.\u0089F\u00fdk\u00d4\u00af\u00fe\u00ec9\u0095\u00da.\u0083C"
+      },
+      "sending_chain": {
+        "version": "1.0.0",
+        "length": 0,
+        "key": "\u00f4\u00d9\u0017\u0006GS%\u0098<\u00ae\u00c2+\u00cb[g\u0000Oxq\u0015j\u0019\u0094\u00e0C\u00fc\u00a6k.\u0087\u0080\u0096"
+      },
+      "previous_sending_chain_length": null
+    }
+  },
+  "skipped_message_keys": []
+}

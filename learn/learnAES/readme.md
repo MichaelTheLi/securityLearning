@@ -20,7 +20,12 @@ Files in `data` used to emulate different users
    1. `tag` - [MAC(Message Authentication Code)](https://en.wikipedia.org/wiki/Message_authentication_code):
       
       With encryption alone, the receiver is not able to detect if the ciphertext (i.e., the encrypted data) was modified while in transit. 
-      Modern usage encourages message authentication, as described [here](https://pycryptodome.readthedocs.io/en/latest/src/cipher/modern.html#)
+      Modern usage encourages message authentication, as described [here](https://pycryptodome.readthedocs.io/en/latest/src/cipher/modern.html#) and [here](https://en.wikipedia.org/wiki/Authenticated_encryption)
+      
+      Also, good explanation [here](https://security.stackexchange.com/questions/33569/why-do-you-need-message-authentication-in-addition-to-encryption)
+
+      > Encryption and decryption just transforms bytes. You say that when the password is wrong "the message simply would not decrypt", but that's not true: the result will just not be the same as the original. Try some online encryption tool like this one. If you encrypt "example" with the password testonetwothree1, you get Rg2iS8PvYsIUgmEynHP62g== as result. If you now decrypt the same ciphertext with the password testonetwothree4, you get "JÙ] i.ï¿¤WÆÏ*q" as result.
+
    2. `nonce` - [single-use number](https://en.wikipedia.org/wiki/Cryptographic_nonce) used as Initialization Vector
    
       Fun fact: turns out to be a [linguistic term](https://en.wikipedia.org/wiki/Nonce_word)  

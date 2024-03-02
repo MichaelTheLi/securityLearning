@@ -1,7 +1,7 @@
 import json
 from base64 import b64encode
 
-from learn.learnAES.aes import encrypt
+from learn.learnSymmetric.aes import encrypt
 
 if __name__ == '__main__':
     header = b"It's certainly me, trust me"

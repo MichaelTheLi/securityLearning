@@ -1,7 +1,7 @@
 import json
 from base64 import b64decode
 
-from learn.learnAES.aes import decrypt_without_verify, decrypt
+from learn.learnSymmetric.aes import decrypt_without_verify, decrypt
 
 if __name__ == '__main__':
     f = open('data/data.json', 'rb')

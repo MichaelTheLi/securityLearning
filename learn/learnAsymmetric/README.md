@@ -1,4 +1,4 @@
-# Just play around with asymetric encryption
+# Just play around with asymmetric encryption
 
 Note: all of this done only in learning purposes
 

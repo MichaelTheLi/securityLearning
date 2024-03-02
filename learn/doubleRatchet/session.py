@@ -1,16 +1,16 @@
+import base64
 import json
 import os
 import pickle
 from collections import defaultdict
 from pathlib import Path
-from typing import List, Optional, Dict
+from typing import List, Optional, Dict, Tuple
 
 from cryptography.hazmat.primitives.asymmetric.x448 import X448PrivateKey, X448PublicKey
 from doubleratchet import EncryptedMessage, DuplicateMessageException
 
 from learn.doubleRatchet.dr import DoubleRatchet, dr_configuration
 from learn.doubleRatchet.user import User, PublicUser
-
 
 class SessionMessages:
     def __init__(self):
@@ -45,21 +45,39 @@ class Session:
 
         self.dumpData()
 
-    async def readMessages(self) -> List[str]:
+    async def readMessages(self) -> List[Tuple[str, List[Tuple[str, str]]]]:
         await self.initializeIfNeeded()
 
-        r: List[str] = []
+        messages: List[Tuple[str, List[Tuple[str, str]]]] = []
         for message in self.messages.messages[self.user.name]:
             try:
                 message_decrypted = await self.dr.decrypt_message(message, self.ad.encode('utf-8'))
-                r.append(message_decrypted.decode('UTF-8'))
+                item = (
+                    message_decrypted.decode('UTF-8'),
+                    self.debugData(message)
+                )
+                messages.append(item)
             except DuplicateMessageException:
                 print("duplicate_message", message)
         self.messages.messages[self.user.name] = []
 
         self.dumpData()
 
-        return r
+        return messages
+
+    @staticmethod
+    def debugData(message: EncryptedMessage) -> List[Tuple[str, str]]:
+        return [
+            ('Header_pub', base64.b64encode(message.header.ratchet_pub).decode('utf-8')),
+            ('Sending chain', str(message.header.sending_chain_length)),
+            ('Previous sending chain', str(message.header.previous_sending_chain_length)),
+            ('Previous sending chain', str(message.header.previous_sending_chain_length)),
+            ('Message', base64.b64encode(message.ciphertext).decode('utf-8'))
+        ]
+
+    @staticmethod
+    def printDebugLine(header: str, msg: str):
+        print(f"{bcolors.WARNING}{header}: {msg}{bcolors.ENDC}")
 
     def dumpData(self):
         with open(self.storagePath, "wb") as deferred_bin:

@@ -6,6 +6,17 @@ from learn.doubleRatchet.session import Session
 from learn.doubleRatchet.user import User, PublicUser
 
 
+class Colors:
+    HEADER = '\033[95m'
+    OKBLUE = '\033[94m'
+    OKCYAN = '\033[96m'
+    OKGREEN = '\033[92m'
+    WARNING = '\033[93m'
+    FAIL = '\033[91m'
+    ENDC = '\033[0m'
+    BOLD = '\033[1m'
+    UNDERLINE = '\033[4m'
+
 async def loop(session: Session) -> bool:
     message = input(session.user.name + "> ")
 
@@ -15,8 +26,10 @@ async def loop(session: Session) -> bool:
     if message != "":
         await session.sendMessage(message)
 
-    for x in await session.readMessages():
-        print(session.other.name + '> ' + x)
+    for message, additionalInfo in await session.readMessages():
+        print(f"{session.other.name}> {Colors.OKGREEN}{message}{Colors.ENDC}")
+        for header, msg in additionalInfo:
+            print(f"{Colors.WARNING}{header}: {msg}{Colors.ENDC}")
 
     return True
 

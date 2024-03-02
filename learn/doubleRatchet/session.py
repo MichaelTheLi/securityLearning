@@ -34,14 +34,16 @@ class Session:
         except:
             self.messages = SessionMessages()
 
+        conversationPointed = self.user.name + '_dr_for_' + self.other.name
+        self.dr_path = Path("private_storage/" + conversationPointed + ".json")
+
     async def sendMessage(self, message: str):
         await self.initializeIfNeeded()
 
         message_encrypted = await self.dr.encrypt_message(message.encode("UTF-8"), self.ad.encode('utf-8'))
         self.messages.messages[self.other.name].append(message_encrypted)
 
-        with open(self.storagePath, "wb") as deferred_bin:
-            pickle.dump(self.messages, deferred_bin)
+        self.dumpData()
 
     async def readMessages(self) -> List[str]:
         await self.initializeIfNeeded()
@@ -55,10 +57,16 @@ class Session:
                 print("duplicate_message", message)
         self.messages.messages[self.user.name] = []
 
+        self.dumpData()
+
+        return r
+
+    def dumpData(self):
         with open(self.storagePath, "wb") as deferred_bin:
             pickle.dump(self.messages, deferred_bin)
 
-        return r
+        with open(self.dr_path, "w", encoding="utf-8") as dr_json:
+            json.dump(self.dr.json, dr_json)
 
     async def initializeIfNeeded(self):
         conversation = self.user.name + '_dr_for_' + self.other.name
@@ -77,15 +85,13 @@ class Session:
 
                 if not res:
                     raise Exception('Initial message check failed')
-            else:
+            elif self.dr is None:
                 with open(path, "r", encoding="utf-8") as dr_json:
                     self.dr = DoubleRatchet.from_json(json.load(dr_json), **dr_configuration)
 
     async def firstInitialize(self) -> Optional[EncryptedMessage]:
-        conversation = self.user.name + '_dr_for_' + self.other.name
-        path = Path("private_storage/" + conversation + ".json")
-        if path.exists():
-            with open(path, "r", encoding="utf-8") as dr_json:
+        if self.dr_path.exists():
+            with open(self.dr_path, "r", encoding="utf-8") as dr_json:
                 self.dr = DoubleRatchet.from_json(json.load(dr_json), **dr_configuration)
             return None
         else:
@@ -100,16 +106,12 @@ class Session:
                 **dr_configuration
             )
 
-            with open(path, "w", encoding="utf-8") as dr_json:
-                json.dump(self.dr.json, dr_json)
-
             return initial_message_encrypted
 
     async def secondaryInitializeWith(self, initial_message: EncryptedMessage) -> bool:
         conversation = self.user.name + '_dr_for_' + self.other.name
-        path = Path("private_storage/" + conversation + ".json")
-        if path.exists():
-            with open(path, "r", encoding="utf-8") as dr_json:
+        if self.dr_path.exists():
+            with open(self.dr_path, "r", encoding="utf-8") as dr_json:
                 self.dr = DoubleRatchet.from_json(json.load(dr_json), **dr_configuration)
             return True
         else:
@@ -123,8 +125,5 @@ class Session:
                 associated_data=self.ad.encode('utf-8'),
                 **dr_configuration
             )
-
-            with open(path, "w", encoding="utf-8") as dr_json:
-                json.dump(self.dr.json, dr_json)
 
             return initial_message_decrypted == self.ad.encode('utf-8')

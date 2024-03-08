@@ -5,8 +5,8 @@ import random
 from pathlib import Path
 from typing import List
 
-from cryptography.hazmat.primitives.asymmetric.ed448 import Ed448PrivateKey
-from cryptography.hazmat.primitives.asymmetric.x448 import X448PrivateKey
+from cryptography.hazmat.primitives.asymmetric.x25519 import X25519PrivateKey
+from xeddsa import ed25519_priv_sign, ed25519_seed_sign
 
 
 class PreKeyBundle:
@@ -93,12 +93,12 @@ class PrivateKeysBundle:
         if path.exists():
             return PrivateKeysBundle.fromJson(path)
         else:
-            ik = X448PrivateKey.generate()
-            spk = X448PrivateKey.generate()
-            ephemeral = X448PrivateKey.generate()
+            ik = X25519PrivateKey.generate()
+            spk = X25519PrivateKey.generate()
+            ephemeral = X25519PrivateKey.generate()
             opks = []
             for i in range(10):
-                opk = X448PrivateKey.generate()
+                opk = X25519PrivateKey.generate()
                 opks.append(opk.private_bytes_raw())
             r = PrivateKeysBundle(
                 ik.private_bytes_raw(),
@@ -110,19 +110,17 @@ class PrivateKeysBundle:
             return r
 
     def getPreKeyBundle(self) -> PreKeyBundle:
-        ik_pub = X448PrivateKey.from_private_bytes(self.ik).public_key()
-        spk_pub = X448PrivateKey.from_private_bytes(self.spk).public_key()
+        ik_pub = X25519PrivateKey.from_private_bytes(self.ik).public_key()
+        spk_pub = X25519PrivateKey.from_private_bytes(self.spk).public_key()
 
-        # signerKey = Ed448PrivateKey.from_private_bytes(self.ik) # TODO Convert X448 to Ed448?
-        # spk_sig = signerKey.sign(spk_pub.public_bytes_raw())
-        spk_sig = b'none'
+        spk_sig = ed25519_priv_sign(self.ik, spk_pub.public_bytes_raw())
 
         rnd = random.Random()
         selectedOpkIdx = rnd.randint(0, len(self.opks) - 1)
         selectedOpk = self.opks[selectedOpkIdx]
-        opk_pub = X448PrivateKey.from_private_bytes(selectedOpk).public_key()
+        opk_pub = X25519PrivateKey.from_private_bytes(selectedOpk).public_key()
 
-        ephemeral_pub = X448PrivateKey.from_private_bytes(self.ephemeral).public_key()
+        ephemeral_pub = X25519PrivateKey.from_private_bytes(self.ephemeral).public_key()
 
         return PreKeyBundle(
             ik_pub.public_bytes_raw(),

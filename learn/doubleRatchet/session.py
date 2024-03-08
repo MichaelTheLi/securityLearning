@@ -8,11 +8,9 @@ from typing import List, Optional, Dict, Tuple
 
 from Crypto.Hash import SHA512
 from Crypto.Protocol.KDF import HKDF
-from Crypto.PublicKey import ECC
-from Crypto.Signature import eddsa
-from cryptography.hazmat.primitives.asymmetric.ed448 import Ed448PublicKey
-from cryptography.hazmat.primitives.asymmetric.x448 import X448PrivateKey, X448PublicKey
+from cryptography.hazmat.primitives.asymmetric.x25519 import X25519PrivateKey, X25519PublicKey
 from doubleratchet import EncryptedMessage, DuplicateMessageException
+from xeddsa import ed25519_verify
 
 from learn.doubleRatchet.colors import Colors
 from learn.doubleRatchet.dr import DoubleRatchet, dr_configuration
@@ -154,15 +152,15 @@ class Session:
             return initial_message_decrypted == self.ad.encode('utf-8')
 
     def calculateInitialX3dh(self) -> bytes:
-        mine_ik = X448PrivateKey.from_private_bytes(self.user.privateKeysBundle.ik)
-        other_spk = X448PublicKey.from_public_bytes(self.other.preKeyBundle.spk_pub)
+        mine_ik = X25519PrivateKey.from_private_bytes(self.user.privateKeysBundle.ik)
+        other_spk = X25519PublicKey.from_public_bytes(self.other.preKeyBundle.spk_pub)
         DH_1 = mine_ik.exchange(other_spk)
 
-        mine_ek = X448PrivateKey.from_private_bytes(self.user.privateKeysBundle.ephemeral)
+        mine_ek = X25519PrivateKey.from_private_bytes(self.user.privateKeysBundle.ephemeral)
 
-        other_ik = X448PublicKey.from_public_bytes(self.other.preKeyBundle.ik_pub)
-        other_spk = X448PublicKey.from_public_bytes(self.other.preKeyBundle.spk_pub)
-        other_opk = X448PublicKey.from_public_bytes(self.other.preKeyBundle.opk_pub)
+        other_ik = X25519PublicKey.from_public_bytes(self.other.preKeyBundle.ik_pub)
+        other_spk = X25519PublicKey.from_public_bytes(self.other.preKeyBundle.spk_pub)
+        other_opk = X25519PublicKey.from_public_bytes(self.other.preKeyBundle.opk_pub)
         DH_2 = mine_ek.exchange(other_ik)
         DH_3 = mine_ek.exchange(other_spk)
         DH_4 = mine_ek.exchange(other_opk)
@@ -171,12 +169,11 @@ class Session:
         print('mine_ek', base64.b64encode(mine_ek.public_key().public_bytes_raw()).decode('utf-8'))
         print('other_opk', base64.b64encode(other_opk.public_bytes_raw()).decode('utf-8'))
 
-        # key = Ed448PublicKey.from_public_bytes(other_ik.public_bytes_raw() + b"=")
-        # try:
-        #     key.verify(self.other.preKeyBundle.spk_sig, other_spk.public_bytes_raw())
-        # except ValueError:
-        #     print('Unable to verify Signed Prekey')
-        #     raise ValueError
+        try:
+            ed25519_verify(self.other.preKeyBundle.spk_sig, other_ik.public_bytes_raw(), other_spk.public_bytes_raw())
+        except ValueError:
+            print('Unable to verify Signed Prekey')
+            raise ValueError
 
         print('dh1', base64.b64encode(DH_1).decode('utf-8'))
         print('dh2', base64.b64encode(DH_2).decode('utf-8'))
@@ -191,14 +188,14 @@ class Session:
         )
 
     def calculateSecondaryX3dh(self, bundleUsed: int) -> bytes:
-        mine_spk = X448PrivateKey.from_private_bytes(self.user.privateKeysBundle.spk)
-        other_ik = X448PublicKey.from_public_bytes(self.other.preKeyBundle.ik_pub)
+        mine_spk = X25519PrivateKey.from_private_bytes(self.user.privateKeysBundle.spk)
+        other_ik = X25519PublicKey.from_public_bytes(self.other.preKeyBundle.ik_pub)
         DH_1 = mine_spk.exchange(other_ik)
 
-        mine_ik = X448PrivateKey.from_private_bytes(self.user.privateKeysBundle.ik)
-        mine_opk = X448PrivateKey.from_private_bytes(self.user.privateKeysBundle.opks[bundleUsed])
+        mine_ik = X25519PrivateKey.from_private_bytes(self.user.privateKeysBundle.ik)
+        mine_opk = X25519PrivateKey.from_private_bytes(self.user.privateKeysBundle.opks[bundleUsed])
 
-        other_ek = X448PublicKey.from_public_bytes(self.other.preKeyBundle.ephemeral_pub)
+        other_ek = X25519PublicKey.from_public_bytes(self.other.preKeyBundle.ephemeral_pub)
         DH_2 = mine_ik.exchange(other_ek)
         DH_3 = mine_spk.exchange(other_ek)
         DH_4 = mine_opk.exchange(other_ek)
@@ -208,21 +205,20 @@ class Session:
         print('opk_idx', self.other.preKeyBundle.opk_pub_idx)
 
         for opk in self.user.privateKeysBundle.opks:
-            print('mine_opk', base64.b64encode(X448PrivateKey.from_private_bytes(opk).public_key().public_bytes_raw()).decode('utf-8'))
+            print('mine_opk', base64.b64encode(X25519PrivateKey.from_private_bytes(opk).public_key().public_bytes_raw()).decode('utf-8'))
 
         print('dh1', base64.b64encode(DH_1).decode('utf-8'))
         print('dh2', base64.b64encode(DH_2).decode('utf-8'))
         print('dh3', base64.b64encode(DH_3).decode('utf-8'))
         print('dh4', base64.b64encode(DH_4).decode('utf-8'))
 
-        # other_spk = X448PublicKey.from_public_bytes(self.other.preKeyBundle.spk_pub)
+        other_spk = X25519PublicKey.from_public_bytes(self.other.preKeyBundle.spk_pub)
 
-        # key = Ed448PublicKey.from_public_bytes(other_ik.public_bytes_raw() + b"=")
-        # try:
-        #     key.verify(self.other.preKeyBundle.spk_sig, other_spk.public_bytes_raw())
-        # except ValueError:
-        #     print('Unable to verify Signed Prekey')
-        #     raise ValueError
+        try:
+            ed25519_verify(self.other.preKeyBundle.spk_sig, other_ik.public_bytes_raw(), other_spk.public_bytes_raw())
+        except ValueError:
+            print('Unable to verify Signed Prekey')
+            raise ValueError
 
         return HKDF(
             DH_1 + DH_2 + DH_3 + DH_4,

@@ -3,7 +3,7 @@ from typing import Any, Dict
 from doubleratchet import DoubleRatchet as DR, Header
 from doubleratchet.recommended import (
     aead_aes_hmac,
-    diffie_hellman_ratchet_curve448 as dhr448,
+    diffie_hellman_ratchet_curve25519 as dhr25519,
     HashFunction,
     kdf_hkdf,
     kdf_separate_hmacs
@@ -25,7 +25,7 @@ class DoubleRatchet(DR):
         )
 
 
-class DiffieHellmanRatchet(dhr448.DiffieHellmanRatchet):
+class DiffieHellmanRatchet(dhr25519.DiffieHellmanRatchet):
     """
     Use the recommended X448-based Diffie-Hellman ratchet implementation in this example.
     """

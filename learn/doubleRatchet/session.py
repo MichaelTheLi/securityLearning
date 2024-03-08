@@ -126,7 +126,7 @@ class Session:
             print('Secret: ', base64.b64encode(shared_secret).decode('utf-8'))
             self.dr, initial_message_encrypted = await DoubleRatchet.encrypt_initial_message(
                 shared_secret=shared_secret,
-                recipient_ratchet_pub=self.other.preKeyBundle.ratchet_pub,
+                recipient_ratchet_pub=self.other.preKeyBundle.spk_pub,
                 message=self.ad.encode('utf-8'),
                 associated_data=self.ad.encode('utf-8'),
                 **dr_configuration
@@ -145,7 +145,7 @@ class Session:
 
             self.dr, initial_message_decrypted = await DoubleRatchet.decrypt_initial_message(
                 shared_secret=shared_secret,
-                own_ratchet_priv=self.user.privateKeysBundle.ratchet,
+                own_ratchet_priv=self.user.privateKeysBundle.spk,
                 message=initial_message,
                 associated_data=self.ad.encode('utf-8'),
                 **dr_configuration

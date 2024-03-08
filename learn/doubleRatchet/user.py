@@ -16,7 +16,6 @@ class PreKeyBundle:
                  spk_sig: bytes,
                  opk_pub: bytes,
                  opk_pub_idx: int,
-                 ratchet_pub: bytes,
                  ephemeral_pub: bytes,
                  ):
         self.ik_pub = ik_pub
@@ -24,7 +23,6 @@ class PreKeyBundle:
         self.spk_sig = spk_sig
         self.opk_pub = opk_pub
         self.opk_pub_idx = opk_pub_idx
-        self.ratchet_pub = ratchet_pub # TODO Shouldnt exist
         self.ephemeral_pub = ephemeral_pub
 
     def toJson(self, path: Path):
@@ -35,7 +33,6 @@ class PreKeyBundle:
                 'spk_sig': base64.b64encode(self.spk_sig).decode('utf-8'),
                 'opk_pub': base64.b64encode(self.opk_pub).decode('utf-8'),
                 'opk_pub_idx': self.opk_pub_idx,
-                'ratchet_pub': base64.b64encode(self.ratchet_pub).decode('utf-8'),
                 'ephemeral_pub': base64.b64encode(self.ephemeral_pub).decode('utf-8'),
             }
             json.dump(data, jsonFile)
@@ -51,7 +48,6 @@ class PreKeyBundle:
                     base64.b64decode(json_parsed['spk_sig']),
                     base64.b64decode(json_parsed['opk_pub']),
                     json_parsed['opk_pub_idx'],
-                    base64.b64decode(json_parsed['ratchet_pub']),
                     base64.b64decode(json_parsed['ephemeral_pub']),
                 )
 
@@ -61,13 +57,11 @@ class PrivateKeysBundle:
                  ik: bytes,
                  spk: bytes,
                  opks: List[bytes],
-                 ratchet: bytes,
                  ephemeral: bytes,
                  ):
         self.ik = ik
         self.spk = spk
         self.opks = opks
-        self.ratchet = ratchet
         self.ephemeral = ephemeral
 
     def toJson(self, path: Path):
@@ -76,7 +70,6 @@ class PrivateKeysBundle:
                 'ik': base64.b64encode(self.ik).decode('utf-8'),
                 'spk': base64.b64encode(self.spk).decode('utf-8'),
                 'opks': list(map(lambda x: base64.b64encode(x).decode('utf-8'), self.opks)),
-                'ratchet': base64.b64encode(self.ratchet).decode('utf-8'),
                 'ephemeral': base64.b64encode(self.ephemeral).decode('utf-8'),
             }
             json.dump(data, jsonFile)
@@ -90,7 +83,6 @@ class PrivateKeysBundle:
                     base64.b64decode(json_parsed['ik']),
                     base64.b64decode(json_parsed['spk']),
                     list(map(base64.b64decode, json_parsed['opks'])),
-                    base64.b64decode(json_parsed['ratchet']),
                     base64.b64decode(json_parsed['ephemeral']),
                 )
 
@@ -103,7 +95,6 @@ class PrivateKeysBundle:
         else:
             ik = X448PrivateKey.generate()
             spk = X448PrivateKey.generate()
-            ratchet = X448PrivateKey.generate()
             ephemeral = X448PrivateKey.generate()
             opks = []
             for i in range(10):
@@ -113,7 +104,6 @@ class PrivateKeysBundle:
                 ik.private_bytes_raw(),
                 spk.private_bytes_raw(),
                 opks,
-                ratchet.private_bytes_raw(),
                 ephemeral.private_bytes_raw()
             )
             r.toJson(path)
@@ -132,7 +122,6 @@ class PrivateKeysBundle:
         selectedOpk = self.opks[selectedOpkIdx]
         opk_pub = X448PrivateKey.from_private_bytes(selectedOpk).public_key()
 
-        ratchet_pub = X448PrivateKey.from_private_bytes(self.ratchet).public_key()
         ephemeral_pub = X448PrivateKey.from_private_bytes(self.ephemeral).public_key()
 
         return PreKeyBundle(
@@ -141,7 +130,6 @@ class PrivateKeysBundle:
             spk_sig,
             opk_pub.public_bytes_raw(),
             selectedOpkIdx,
-            ratchet_pub.public_bytes_raw(),
             ephemeral_pub.public_bytes_raw(),
         )
 

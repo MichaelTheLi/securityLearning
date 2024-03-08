@@ -1,0 +1,28 @@
+{
+  "version": "1.0.0",
+  "diffie_hellman_ratchet": {
+    "version": "1.0.0",
+    "own_ratchet_priv": "X\u0085_I\u00d2\u00c1P(\u008d>\u00a3i\u00bb\u00da\u0014\u00c2_\u0099\u0082\u00d3/v\u00f2\u001e\u00f7\u00c2\u00e10\u008a\u00cf\u0090|",
+    "other_ratchet_pub": "<\u00e2\u00b1w}\tWjW\u00c3\u007fa\u00e3\u0015\u0014\u00e4\u00ad\u00df\u00c1\u00a7\u00e1\u00cd\u00dc\u0092\u0012\u0098\u00bd\u00df\u00ee\u008d\u00b2>",
+    "root_chain": {
+      "version": "1.0.0",
+      "length": 4,
+      "key": "\u0012y\u00be\u00a3i?b\u00f8\u00e1w&\u0083`A\u008a\n\u00d7\u00c8\u00fd\u001e\u00d9y\u00f5?\u00f9\u00ad\u00c8\u00f2\u00faRu|"
+    },
+    "symmetric_key_ratchet": {
+      "version": "1.0.0",
+      "receiving_chain": {
+        "version": "1.0.0",
+        "length": 3,
+        "key": ":M\u00b6bO\u0083P\u00c6\u00a7\u00cd\u009f-\u00b6F\u0090\u00a2\u00bc\u00bd\u0097k\u00b9c\u00f6W\u00de\u00e8\u00f4\u00d1\u00c2;\u0091\u007f"
+      },
+      "sending_chain": {
+        "version": "1.0.0",
+        "length": 0,
+        "key": "\u00a0\u009e\u00d8\u0090\u00d3\u0084a`\u00d6i\u00da\u00bbh\u00da\u0017\u0095\u0082 @\u00fc4S\u0011\u0090/h\u009a\u00ed\u00e1*\u0012,"
+      },
+      "previous_sending_chain_length": 1
+    }
+  },
+  "skipped_message_keys": []
+}

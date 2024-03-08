@@ -64,7 +64,7 @@ class Session:
                 )
                 messages.append(item)
             except DuplicateMessageException:
-                print("duplicate_message", message)
+                self.printDebugLine("duplicate_message", base64.b64encode(message.ciphertext).decode('utf-8'))
         self.messages.messages[self.user.name] = []
 
         self.dumpData()

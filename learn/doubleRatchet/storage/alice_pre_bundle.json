@@ -1,8 +1,1 @@
-{
-  "ik_pub": "X/2/r2gJQ84VarZ31DEGHO6sNY7NAf6XNfwnFO6uQE0=",
-  "spk_pub": "midvl47m83mj0ip4muUEPkxgrCvDlJzrt7keXM+5pC4=",
-  "spk_sig": "vBfEpPk5a4U1GnJZbjqmDr+C1mK1SX/7xMK6RqozOMmDDX7mP/QxMCpgohSXACNAmbQV4mUswrGg8SFtOcoRDw==",
-  "opk_pub": "0X2MHn0D2dDpjVIywWCJSYY4tk5OI5HCSYKv9c/pNyQ=",
-  "opk_pub_idx": 1,
-  "ephemeral_pub": "m55HZ1RPG157+SvChz8pmN4sZk3tVFPeOi9Hpxo4Wwk="
-}
+{"ik_pub": "X/2/r2gJQ84VarZ31DEGHO6sNY7NAf6XNfwnFO6uQE0=", "spk_pub": "midvl47m83mj0ip4muUEPkxgrCvDlJzrt7keXM+5pC4=", "spk_sig": "2EDyMzgcqMuCpTYZeB8ndbGenWeMaoZzzOFr+sOKBteHLpWB+uON3CCKwNZ9rERZkHIUQauECXlrHC9DNwi/Ag==", "opk_pub": "dhog0VEMDP5m78013qIcGvTRsE4YSyQOCmoZWhpBWCI=", "opk_pub_idx": 2, "ephemeral_pub": "m55HZ1RPG157+SvChz8pmN4sZk3tVFPeOi9Hpxo4Wwk="}

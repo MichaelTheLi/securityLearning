@@ -1,8 +1,1 @@
-{
-  "ik_pub": "YJK2asMYXUaS5uyjm1Z9JMRYwdkYp73GZHHrS5SJRCI=",
-  "spk_pub": "3vScWci4doBnqTIzWkAZq7VVOseiS1R2F65fYCFgbis=",
-  "spk_sig": "7RQOa3On3mWX3HeyPvJ3cz76bIRCTPyZ+5LGEC514/5AapjKuuO/GV7OpX7u/Sqy2x24/+Y4EpIi8DpDVmtfDQ==",
-  "opk_pub": "0MgE2Zz3ugu1SsyPTl/cRfXZDvApeDrczRsZui8VJGg=",
-  "opk_pub_idx": 6,
-  "ephemeral_pub": "yntUZPLTF4MAitts8k9esO2cNyOdojcKA1vfpRhV3Ac="
-}
+{"ik_pub": "YJK2asMYXUaS5uyjm1Z9JMRYwdkYp73GZHHrS5SJRCI=", "spk_pub": "3vScWci4doBnqTIzWkAZq7VVOseiS1R2F65fYCFgbis=", "spk_sig": "HJ7yF5mgElQjzk8GZEx9foUFdL+E2EdZLu4Yds1Inziu0nAaz3Zr1YNVzgQZuxQ47gLGqoevkkARciZ8Gy4fBw==", "opk_pub": "tyfaJZn2wrqHaYvrJHkrh8amixAkxW2sglfTFUB2cjU=", "opk_pub_idx": 8, "ephemeral_pub": "yntUZPLTF4MAitts8k9esO2cNyOdojcKA1vfpRhV3Ac="}

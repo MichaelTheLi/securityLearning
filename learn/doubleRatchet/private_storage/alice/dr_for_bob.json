@@ -2,26 +2,26 @@
   "version": "1.0.0",
   "diffie_hellman_ratchet": {
     "version": "1.0.0",
-    "own_ratchet_priv": "\u00d8\u00e8v!r\u00adM\u00a0\u0000\u0086[!\u00aa<m\u0085\u0099\u00cf\u0005\u0086\u00eaN\u00f8B\u0091\u00e2\u00b7\u00f8\u00b8v\u00c0n",
-    "other_ratchet_pub": "\u00f6\u0011\u00b5>\u0001\u008cLg\u00bfP|\u00b4n%\u00d7\u00d8o\u0095\u00d5\u00fe0\u00d2m\u00a5\u00c3\u000f\r\u0002SK\u009aa",
+    "own_ratchet_priv": "hW)\u00f1wn]\u00c8\u00c9!\u00df\u00f0\u00cas\u0000P\u008a\u008dB\r\u0094\u00b7\u00a9s_.\u0093\u00a3\u0005\u000b\u0092E",
+    "other_ratchet_pub": "\u001e\nGN@B\u00e2\u00f0H\u008dFJ\u00ad\u00f0\u0090\u0095\u00f1M\u00a7\u000b5\u00d6\u0016\u000f\u00f7\u009a\u00e0\u0096\u00f0\u0019\u001a\u0019",
     "root_chain": {
       "version": "1.0.0",
-      "length": 3,
-      "key": "\u00e2\u0096J\u008b08\u009b\u008bN_\u00efV\u00e98\u00c6\u00d6'g\u009d\u0012\u00ddZ\bL\u0090\u00abx\u00b0\u00da~\u00f2}"
+      "length": 5,
+      "key": "P%\u00e7\u00f6\u0093\u0088\u00c9\u00a1-\u00f6\u0081I\t\u00cfi\u008fsi(3\u00e8$Z\u00b0\u009d\u00fb\u0018]W\u00e6\u00a8\u00ac"
     },
     "symmetric_key_ratchet": {
       "version": "1.0.0",
       "receiving_chain": {
         "version": "1.0.0",
         "length": 1,
-        "key": "\u00c5Q\u00fd\u00b7\u000f\u00e8\u009b\u0004zD\u00ceM\u0099\u009a\u0094\u00ea\u00c2\u00c7\u0000[\u00aa\u00c7\u0002\u00e9\u00d6{\u008d\u00da\u00c1\u00bfs\u0097"
+        "key": "\u000f~\u00e57\u00fd?\u000fof\u00beUF\u00e7\u00a3\u0090S\u00e8\u00ee\u008et\u009e\u00f4\u000fK\u00cb\u00d4\u00009\u00b3\u00da\u0080H"
       },
       "sending_chain": {
         "version": "1.0.0",
-        "length": 3,
-        "key": ":M\u00b6bO\u0083P\u00c6\u00a7\u00cd\u009f-\u00b6F\u0090\u00a2\u00bc\u00bd\u0097k\u00b9c\u00f6W\u00de\u00e8\u00f4\u00d1\u00c2;\u0091\u007f"
+        "length": 1,
+        "key": "\u009e\u00f7z\u0018\u00ad\u00bdX\u00fb\u00fd\u00cf\u00d7\u00ce\u00dd\u000eJ\u00e7\u00dc\u00e1\u000e\u00a0\u0010\\\u00b6kT\u00c1\u00a8\u00e2\u00cc\u0092=\u00dd"
       },
-      "previous_sending_chain_length": 1
+      "previous_sending_chain_length": 3
     }
   },
   "skipped_message_keys": []

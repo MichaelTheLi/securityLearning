@@ -6,11 +6,13 @@ Note: all of this done only in learning purposes
 
 1. Double-Ratchet encrypt-decrypt
 
-https://signal.org/docs/specifications/doubleratchet/
+    https://signal.org/docs/specifications/doubleratchet/
+    
+    https://github.com/Syndace/python-doubleratchet
 
-https://github.com/Syndace/python-doubleratchet
+2. Extended Triple-Diffie-Hellman exchange
 
-
+    https://lianglouise.github.io/post/some_practice_on_implementing_signal_protocol_with_python_1/
 
 ## Result
 

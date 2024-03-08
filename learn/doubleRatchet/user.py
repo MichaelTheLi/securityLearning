@@ -6,7 +6,7 @@ from pathlib import Path
 from typing import List
 
 from cryptography.hazmat.primitives.asymmetric.x25519 import X25519PrivateKey
-from xeddsa import ed25519_priv_sign, ed25519_seed_sign
+from xeddsa import ed25519_priv_sign
 
 
 class PreKeyBundle:
